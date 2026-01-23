@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Game {
+  id                 String   @id @default(cuid())
+  roomCode           String   @unique
+  hostPlayerId       String?
+  status             String   @default("waiting") // waiting, playing, finished
+  gameMode           String   @default("ORIGINAL") // ORIGINAL, PRO, EXPERT
+  currentPlayerIndex Int      @default(0)
+  currentDjIndex     Int      @default(0)
+  currentCard        String?  // JSON string: {youtubeId, title, artist, year}
+  phase              String   @default("LOBBY") // LOBBY, PLAYING_SONG, PLACING_CARD, CHALLENGE, REVEAL, RESULT, GAME_OVER
+  deck               String   @default("[]") // JSON array of song IDs
+  createdAt          DateTime @default(now())
+  players            Player[]
+}
+
+model Player {
+  id       String   @id @default(cuid())
+  gameId   String
+  game     Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  name     String
+  color    String   // hex color
+  tokens   Int      @default(2)
+  timeline String   @default("[]") // JSON array of placed cards
+  isHost   Boolean  @default(false)
+  joinedAt DateTime @default(now())
+}

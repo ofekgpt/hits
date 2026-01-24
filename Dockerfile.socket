@@ -1,0 +1,23 @@
+FROM node:20-slim
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+COPY prisma ./prisma/
+COPY prisma.config.ts ./
+
+# Install dependencies
+RUN npm install
+
+# Generate Prisma client
+RUN npx prisma generate
+
+# Copy server code
+COPY server ./server/
+COPY src/types ./src/types/
+COPY src/generated ./src/generated/
+
+EXPOSE 8080
+
+CMD ["npm", "run", "socket"]

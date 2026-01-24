@@ -4,7 +4,9 @@ import { createServer } from 'http';
 import { PrismaClient } from '../src/generated/prisma/client';
 import type { ServerToClientEvents, ClientToServerEvents, Game, Song, PlacedCard } from '../src/types/game';
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  datasourceUrl: process.env.DATABASE_URL,
+});
 const httpServer = createServer();
 const io = new Server<ClientToServerEvents, ServerToClientEvents>(httpServer, {
   cors: {

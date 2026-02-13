@@ -79,8 +79,15 @@ export function trackToSong(track: SpotifyTrack): Song | null {
   };
 }
 
-// Genre queries to combine with year filters for variety
-const GENRE_QUERIES = ['pop', 'rock', 'soul', 'disco', 'hip-hop', 'r&b', 'dance', 'indie'];
+// Genre queries to combine with year filters for maximum variety
+const GENRE_QUERIES = [
+  // International
+  'pop', 'rock', 'soul', 'disco', 'hip-hop', 'r&b', 'dance', 'indie',
+  'funk', 'reggae', 'metal', 'country', 'jazz', 'blues', 'latin',
+  'electronic', 'punk', 'alternative', 'new wave', 'reggaeton',
+  // Israeli / Hebrew
+  'israeli', 'israeli pop', 'israeli rock',
+];
 
 async function fetchTracksForDecade(
   token: string,
@@ -153,7 +160,7 @@ export async function buildSpotifyDeck(): Promise<Song[]> {
     { start: 2020, end: 2024 },
   ];
 
-  const tracksPerDecade = 8;
+  const tracksPerDecade = 12;
 
   const results = await Promise.all(
     decades.map((d) => fetchTracksForDecade(token, d.start, d.end, tracksPerDecade))

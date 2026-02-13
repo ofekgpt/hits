@@ -34,7 +34,7 @@ export default function GamePage() {
     }
   }, [mounted, router]);
 
-  const { socket, gameState, isConnected } = useSocket(roomCode, mounted ? playerId : null);
+  const { socket, gameState, isConnected, leaveRoom } = useSocket(roomCode, mounted ? playerId : null);
   const {
     playSong,
     songPlayed,
@@ -47,6 +47,12 @@ export default function GamePage() {
   } = useGameActions(roomCode, socket);
 
   const handleReturnHome = () => {
+    router.push('/');
+  };
+
+  const handleLeaveRoom = () => {
+    leaveRoom(roomCode);
+    localStorage.removeItem('playerId');
     router.push('/');
   };
 
@@ -94,7 +100,7 @@ export default function GamePage() {
     <div className="min-h-screen flex flex-col pb-[140px]">
       {/* Header */}
       <div className="p-3">
-        <GameHeader game={gameState} currentPlayerId={playerId} />
+        <GameHeader game={gameState} currentPlayerId={playerId} onLeaveRoom={handleLeaveRoom} />
       </div>
 
       {/* Main Content */}

@@ -5,6 +5,7 @@ import type { Game } from '@/types/game';
 interface GameHeaderProps {
   game: Game;
   currentPlayerId: string | null;
+  onLeaveRoom?: () => void;
 }
 
 const phaseLabels: Record<string, string> = {
@@ -17,7 +18,7 @@ const phaseLabels: Record<string, string> = {
   GAME_OVER: 'Game Over',
 };
 
-export function GameHeader({ game, currentPlayerId }: GameHeaderProps) {
+export function GameHeader({ game, currentPlayerId, onLeaveRoom }: GameHeaderProps) {
   const currentPlayer = game.players[game.currentPlayerIndex];
   const currentDj = game.players[game.currentDjIndex];
   const isMyTurn = currentPlayer?.id === currentPlayerId;
@@ -32,8 +33,18 @@ export function GameHeader({ game, currentPlayerId }: GameHeaderProps) {
             {game.roomCode}
           </span>
         </div>
-        <div className="text-sm text-text-muted">
-          {game.deck.length} cards left
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-text-muted">
+            {game.deck.length} cards left
+          </span>
+          {onLeaveRoom && (
+            <button
+              onClick={onLeaveRoom}
+              className="text-xs text-neon-red/70 hover:text-neon-red border border-neon-red/20 hover:border-neon-red/50 px-2.5 py-1 rounded-lg transition-colors font-display"
+            >
+              Leave
+            </button>
+          )}
         </div>
       </div>
 

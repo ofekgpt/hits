@@ -71,56 +71,66 @@ export function Timeline({
         </div>
       </div>
 
-      {/* Horizontal scrollable timeline */}
-      <div className="flex items-center gap-1.5 overflow-x-auto py-2 min-h-[116px]">
-        {/* Leading drop slot */}
-        {showPlacementSlots && onPlaceCard && (
-          <DropSlot
-            position={0}
-            isHovered={hoveredSlot === 0}
-            onHover={() => setHoveredSlot(0)}
-            onLeave={() => setHoveredSlot(null)}
-            onClick={() => onPlaceCard(0)}
-          />
-        )}
+      {/* Timeline with direction labels */}
+      <div className="flex items-center gap-2">
+        <span className="text-[10px] text-text-dim font-display flex-shrink-0 tracking-wider uppercase">
+          Older
+        </span>
 
-        <AnimatePresence mode="popLayout">
-          {timeline.length === 0 && !showPlacementSlots ? (
-            <motion.div
-              key="empty"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-text-dim text-sm italic px-4"
-            >
-              No cards yet
-            </motion.div>
-          ) : (
-            timeline.map((card, index) => (
-              <motion.div
-                key={card.id}
-                layout
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0, opacity: 0 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                className="flex items-center gap-1.5"
-              >
-                <SongCard card={card} faceUp={true} size="sm" />
-
-                {/* Drop slot after each card */}
-                {showPlacementSlots && onPlaceCard && (
-                  <DropSlot
-                    position={index + 1}
-                    isHovered={hoveredSlot === index + 1}
-                    onHover={() => setHoveredSlot(index + 1)}
-                    onLeave={() => setHoveredSlot(null)}
-                    onClick={() => onPlaceCard(index + 1)}
-                  />
-                )}
-              </motion.div>
-            ))
+        <div className="flex items-center gap-2 overflow-x-auto py-2 min-h-[190px] flex-1">
+          {/* Leading drop slot */}
+          {showPlacementSlots && onPlaceCard && (
+            <DropSlot
+              position={0}
+              isHovered={hoveredSlot === 0}
+              onHover={() => setHoveredSlot(0)}
+              onLeave={() => setHoveredSlot(null)}
+              onClick={() => onPlaceCard(0)}
+            />
           )}
-        </AnimatePresence>
+
+          <AnimatePresence mode="popLayout">
+            {timeline.length === 0 && !showPlacementSlots ? (
+              <motion.div
+                key="empty"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-text-dim text-sm italic px-4"
+              >
+                No cards yet
+              </motion.div>
+            ) : (
+              timeline.map((card, index) => (
+                <motion.div
+                  key={card.id}
+                  layout
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0, opacity: 0 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                  className="flex items-center gap-2"
+                >
+                  <SongCard card={card} faceUp={true} size="md" />
+
+                  {/* Drop slot after each card */}
+                  {showPlacementSlots && onPlaceCard && (
+                    <DropSlot
+                      position={index + 1}
+                      isHovered={hoveredSlot === index + 1}
+                      onHover={() => setHoveredSlot(index + 1)}
+                      onLeave={() => setHoveredSlot(null)}
+                      onClick={() => onPlaceCard(index + 1)}
+                    />
+                  )}
+                </motion.div>
+              ))
+            )}
+          </AnimatePresence>
+        </div>
+
+        <span className="text-[10px] text-text-dim font-display flex-shrink-0 tracking-wider uppercase">
+          Newer
+        </span>
       </div>
     </motion.div>
   );
@@ -144,7 +154,7 @@ function DropSlot({
       onClick={onClick}
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
-      className={`w-8 h-[100px] rounded-xl border-2 border-dashed flex-shrink-0 flex items-center justify-center transition-colors cursor-pointer ${
+      className={`w-10 h-[170px] rounded-xl border-2 border-dashed flex-shrink-0 flex items-center justify-center transition-colors cursor-pointer ${
         isHovered
           ? 'border-neon-green bg-neon-green/15 glow-green'
           : 'border-glass-border-hover bg-glass hover:border-neon-green/40'

@@ -1,35 +1,157 @@
 @import "tailwindcss";
 
+/* ===================================
+   NEON-NOIR GLASSMORPHISM THEME
+   =================================== */
+
 :root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  --bg-primary: #0b0d14;
+  --bg-secondary: #13151f;
+
+  --glass: rgba(255, 255, 255, 0.04);
+  --glass-hover: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(255, 255, 255, 0.14);
+
+  --neon-cyan: #00f0ff;
+  --neon-magenta: #ff00aa;
+  --neon-green: #00ff88;
+  --neon-red: #ff3366;
+  --neon-amber: #ffaa00;
+
+  --text-primary: #e8e8f0;
+  --text-muted: #6b6b80;
+  --text-dim: #3a3a4a;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-glass: var(--glass);
+  --color-glass-hover: var(--glass-hover);
+  --color-glass-border: var(--glass-border);
+  --color-glass-border-hover: var(--glass-border-hover);
+  --color-neon-cyan: var(--neon-cyan);
+  --color-neon-magenta: var(--neon-magenta);
+  --color-neon-green: var(--neon-green);
+  --color-neon-red: var(--neon-red);
+  --color-neon-amber: var(--neon-amber);
+  --color-text-primary: var(--text-primary);
+  --color-text-muted: var(--text-muted);
+  --color-text-dim: var(--text-dim);
+  --font-display: var(--font-syne);
+  --font-body: var(--font-dm-sans);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
   min-height: 100vh;
   min-height: 100dvh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0, 240, 255, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(255, 0, 170, 0.04) 0%, transparent 50%);
+  background-attachment: fixed;
 }
 
-/* Mobile viewport fix */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  pointer-events: none;
+}
+
 html, body {
   height: 100%;
   overflow-x: hidden;
 }
 
-/* Custom scrollbar */
+/* ===== GLASS PANEL ===== */
+
+.glass-panel {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.glass-panel-hover {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
+}
+
+.glass-panel-hover:hover {
+  background: var(--glass-hover);
+  border-color: var(--glass-border-hover);
+}
+
+/* ===== NEON GLOWS ===== */
+
+.glow-cyan {
+  box-shadow:
+    0 0 12px rgba(0, 240, 255, 0.3),
+    0 0 24px rgba(0, 240, 255, 0.15),
+    inset 0 0 12px rgba(0, 240, 255, 0.08);
+}
+
+.glow-magenta {
+  box-shadow:
+    0 0 12px rgba(255, 0, 170, 0.3),
+    0 0 24px rgba(255, 0, 170, 0.15);
+}
+
+.glow-green {
+  box-shadow:
+    0 0 12px rgba(0, 255, 136, 0.4),
+    0 0 24px rgba(0, 255, 136, 0.2);
+}
+
+.glow-red {
+  box-shadow:
+    0 0 12px rgba(255, 51, 102, 0.4),
+    0 0 24px rgba(255, 51, 102, 0.2);
+}
+
+.glow-amber {
+  box-shadow:
+    0 0 12px rgba(255, 170, 0, 0.4),
+    0 0 24px rgba(255, 170, 0, 0.2);
+}
+
+/* ===== 3D CARD SUPPORT ===== */
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* ===== SCROLLBAR ===== */
+
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -37,24 +159,65 @@ html, body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #4b5563;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #6b7280;
+  background: rgba(255, 255, 255, 0.15);
 }
 
-/* Animation utilities */
-@keyframes pulse-glow {
+/* ===== ANIMATIONS ===== */
+
+@keyframes pulse-neon {
   0%, 100% {
-    box-shadow: 0 0 5px currentColor;
+    box-shadow: 0 0 10px var(--neon-cyan), 0 0 20px rgba(0, 240, 255, 0.15);
   }
   50% {
-    box-shadow: 0 0 20px currentColor;
+    box-shadow: 0 0 20px var(--neon-cyan), 0 0 40px rgba(0, 240, 255, 0.3);
   }
 }
 
-.animate-pulse-glow {
-  animation: pulse-glow 2s infinite;
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+.animate-pulse-neon {
+  animation: pulse-neon 2s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.06) 50%,
+    transparent 100%
+  );
+  background-size: 400px 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* ===== NEON TEXT SHADOWS ===== */
+
+.text-glow-cyan {
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.6), 0 0 30px rgba(0, 240, 255, 0.3);
+}
+
+.text-glow-magenta {
+  text-shadow: 0 0 10px rgba(255, 0, 170, 0.6), 0 0 30px rgba(255, 0, 170, 0.3);
+}
+
+.text-glow-green {
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.6), 0 0 30px rgba(0, 255, 136, 0.3);
 }

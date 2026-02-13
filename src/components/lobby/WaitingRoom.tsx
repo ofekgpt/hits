@@ -25,10 +25,10 @@ export function WaitingRoom({ game, currentPlayerId, onStartGame }: WaitingRoomP
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <p className="text-gray-400 text-sm mb-2">Share this code with friends</p>
-        <div className="flex items-center justify-center gap-2">
-          <div className="bg-gray-800 px-6 py-4 rounded-xl border-2 border-purple-600">
-            <span className="text-4xl font-bold text-white tracking-widest">
+        <p className="text-text-muted text-sm mb-3">Share this code with friends</p>
+        <div className="flex items-center justify-center gap-3">
+          <div className="glass-panel px-8 py-5 rounded-2xl border-2 border-neon-cyan/30">
+            <span className="text-4xl font-display font-extrabold text-neon-cyan tracking-[0.3em] text-glow-cyan">
               {game.roomCode}
             </span>
           </div>
@@ -52,7 +52,7 @@ export function WaitingRoom({ game, currentPlayerId, onStartGame }: WaitingRoomP
       )}
 
       {!isHost && (
-        <div className="text-center text-gray-400 py-4">
+        <div className="text-center text-text-muted py-4 text-sm">
           Waiting for host to start the game...
         </div>
       )}

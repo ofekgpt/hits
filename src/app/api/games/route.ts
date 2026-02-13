@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { generateRoomCode } from '@/lib/utils/shuffle';
-import { getShuffledDeck } from '@/data/songs';
+import { buildSpotifyDeck } from '@/lib/spotify';
 import { PLAYER_COLORS } from '@/types/game';
 
 // POST /api/games - Create a new game
@@ -28,8 +28,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to generate room code' }, { status: 500 });
     }
 
-    // Get shuffled deck
-    const deck = getShuffledDeck();
+    // Build deck from Spotify API
+    const deck = await buildSpotifyDeck();
+
+    if (deck.length === 0) {
+      return NextResponse.json({ error: 'Failed to build song deck from Spotify' }, { status: 500 });
+    }
 
     // Create game with host player
     const game = await prisma.game.create({

@@ -1,7 +1,6 @@
 'use client';
 
 import { ReactNode, useEffect } from 'react';
-import { Button } from './Button';
 
 interface ModalProps {
   isOpen: boolean;
@@ -39,17 +38,17 @@ export function Modal({ isOpen, onClose, title, children, showClose = true }: Mo
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
-        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/70 backdrop-blur-md"
         onClick={onClose}
       />
-      <div className="relative bg-gray-900 rounded-xl p-6 max-w-md w-full mx-4 shadow-2xl border border-gray-800">
+      <div className="relative glass-panel rounded-2xl p-6 max-w-md w-full mx-4 border border-glass-border-hover">
         {title && (
-          <h2 className="text-xl font-bold text-white mb-4">{title}</h2>
+          <h2 className="text-xl font-display font-bold text-text-primary mb-4">{title}</h2>
         )}
         {showClose && (
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+            className="absolute top-4 right-4 text-text-muted hover:text-text-primary transition-colors"
           >
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

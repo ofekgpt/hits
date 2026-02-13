@@ -13,10 +13,12 @@ export type GameMode = 'ORIGINAL' | 'PRO' | 'EXPERT';
 
 export interface Song {
   id: string;
-  youtubeId: string;
+  spotifyId: string;
   title: string;
   artist: string;
   year: number;
+  albumArt: string | null;
+  spotifyUri: string;
 }
 
 export interface PlacedCard extends Song {

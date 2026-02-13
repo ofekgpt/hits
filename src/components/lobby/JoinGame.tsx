@@ -44,11 +44,9 @@ export function JoinGame() {
         throw new Error(data.error || 'Failed to join game');
       }
 
-      // Store player info in localStorage
       localStorage.setItem('playerId', data.player.id);
       localStorage.setItem('playerName', data.player.name);
 
-      // Navigate to lobby
       router.push(`/lobby/${data.game.roomCode}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to join game');
@@ -65,7 +63,7 @@ export function JoinGame() {
         value={roomCode}
         onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
         maxLength={4}
-        className="uppercase text-center text-2xl tracking-widest"
+        className="uppercase text-center text-2xl tracking-widest font-display"
       />
       <Input
         label="Your Name"
@@ -74,7 +72,7 @@ export function JoinGame() {
         onChange={(e) => setPlayerName(e.target.value)}
         maxLength={20}
       />
-      {error && <p className="text-red-500 text-sm">{error}</p>}
+      {error && <p className="text-neon-red text-sm">{error}</p>}
       <Button type="submit" loading={loading} className="w-full">
         Join Game
       </Button>

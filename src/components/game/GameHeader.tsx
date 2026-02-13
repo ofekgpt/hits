@@ -24,46 +24,46 @@ export function GameHeader({ game, currentPlayerId }: GameHeaderProps) {
   const amDj = currentDj?.id === currentPlayerId;
 
   return (
-    <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-4 border border-gray-700">
-      <div className="flex items-center justify-between mb-2">
+    <div className="glass-panel rounded-2xl p-4">
+      <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <span className="text-gray-400">Room:</span>
-          <span className="font-bold text-white bg-gray-700 px-2 py-0.5 rounded">
+          <span className="text-text-muted text-sm">Room:</span>
+          <span className="font-display font-bold text-neon-cyan bg-neon-cyan/10 px-3 py-1 rounded-lg border border-neon-cyan/25 text-sm tracking-wider">
             {game.roomCode}
           </span>
         </div>
-        <div className="text-sm text-gray-400">
+        <div className="text-sm text-text-muted">
           {game.deck.length} cards left
         </div>
       </div>
 
       <div className="flex items-center justify-between">
         <div>
-          <span className="text-gray-400">Turn: </span>
-          <span className={`font-semibold ${isMyTurn ? 'text-purple-400' : 'text-white'}`}>
+          <span className="text-text-muted text-sm">Turn: </span>
+          <span className={`font-display font-bold ${isMyTurn ? 'text-neon-cyan text-glow-cyan' : 'text-text-primary'}`}>
             {currentPlayer?.name || '---'}
             {isMyTurn && ' (You)'}
           </span>
         </div>
         <div>
-          <span className="text-gray-400">DJ: </span>
-          <span className={`font-semibold ${amDj ? 'text-blue-400' : 'text-white'}`}>
-            🎧 {currentDj?.name || '---'}
+          <span className="text-text-muted text-sm">DJ: </span>
+          <span className={`font-display font-bold ${amDj ? 'text-neon-magenta text-glow-magenta' : 'text-text-primary'}`}>
+            {currentDj?.name || '---'}
             {amDj && ' (You)'}
           </span>
         </div>
       </div>
 
-      <div className="mt-2 text-center">
+      <div className="mt-3 text-center">
         <span
-          className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
+          className={`inline-block px-4 py-1.5 rounded-xl text-sm font-bold ${
             game.phase === 'PLACING_CARD' && isMyTurn
-              ? 'bg-green-600 text-white'
+              ? 'bg-neon-green/15 text-neon-green border border-neon-green/40 glow-green'
               : game.phase === 'CHALLENGE'
-              ? 'bg-yellow-600 text-white'
+              ? 'bg-neon-amber/15 text-neon-amber border border-neon-amber/40 glow-amber'
               : game.phase === 'PLAYING_SONG' && amDj
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-700 text-gray-300'
+              ? 'bg-neon-magenta/15 text-neon-magenta border border-neon-magenta/40'
+              : 'glass-panel text-text-primary'
           }`}
         >
           {phaseLabels[game.phase] || game.phase}

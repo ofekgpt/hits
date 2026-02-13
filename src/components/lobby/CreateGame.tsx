@@ -35,11 +35,9 @@ export function CreateGame() {
         throw new Error(data.error || 'Failed to create game');
       }
 
-      // Store player info in localStorage
       localStorage.setItem('playerId', data.player.id);
       localStorage.setItem('playerName', data.player.name);
 
-      // Navigate to lobby
       router.push(`/lobby/${data.game.roomCode}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to create game');

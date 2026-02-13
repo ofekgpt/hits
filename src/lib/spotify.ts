@@ -12,7 +12,10 @@ export async function getSpotifyToken(): Promise<string> {
   const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 
   if (!clientId || !clientSecret) {
-    throw new Error('Missing Spotify credentials');
+    throw new Error(
+      'Missing SPOTIFY_CLIENT_ID or SPOTIFY_CLIENT_SECRET environment variables. ' +
+      'Add them in Vercel Dashboard > Project Settings > Environment Variables.'
+    );
   }
 
   const auth = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');

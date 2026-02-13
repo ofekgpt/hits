@@ -10,19 +10,24 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className = '', variant = 'primary', size = 'md', loading, disabled, children, ...props }, ref) => {
-    const baseStyles = 'font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+    const baseStyles =
+      'font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-bg-primary disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer';
 
     const variants = {
-      primary: 'bg-purple-600 hover:bg-purple-700 text-white focus:ring-purple-500',
-      secondary: 'bg-gray-600 hover:bg-gray-700 text-white focus:ring-gray-500',
-      danger: 'bg-red-600 hover:bg-red-700 text-white focus:ring-red-500',
-      ghost: 'bg-transparent hover:bg-gray-800 text-gray-300 focus:ring-gray-500',
+      primary:
+        'bg-neon-cyan/15 hover:bg-neon-cyan/25 text-neon-cyan border border-neon-cyan/30 hover:border-neon-cyan/60 focus:ring-neon-cyan/40 hover:glow-cyan',
+      secondary:
+        'glass-panel-hover text-text-primary focus:ring-glass-border-hover',
+      danger:
+        'bg-neon-red/15 hover:bg-neon-red/25 text-neon-red border border-neon-red/30 hover:border-neon-red/60 focus:ring-neon-red/40',
+      ghost:
+        'bg-transparent hover:bg-glass-hover text-text-muted hover:text-text-primary border border-transparent focus:ring-glass-border',
     };
 
     const sizes = {
       sm: 'px-3 py-1.5 text-sm',
-      md: 'px-4 py-2 text-base',
-      lg: 'px-6 py-3 text-lg',
+      md: 'px-5 py-2.5 text-base',
+      lg: 'px-7 py-3.5 text-lg',
     };
 
     return (

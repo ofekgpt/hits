@@ -26,7 +26,7 @@ export function TokenActions({ player, isCurrentPlayer, phase, onSkip, onFreeCar
         disabled={!canSkip}
         className="flex-1"
       >
-        Skip (1🪙)
+        Skip (1 token)
       </Button>
       <Button
         variant="secondary"
@@ -35,7 +35,7 @@ export function TokenActions({ player, isCurrentPlayer, phase, onSkip, onFreeCar
         disabled={!canFreeCard}
         className="flex-1"
       >
-        Free Card (3🪙)
+        Free Card (3 tokens)
       </Button>
     </div>
   );

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { CreateGame } from '@/components/lobby/CreateGame';
 import { JoinGame } from '@/components/lobby/JoinGame';
 import { Button } from '@/components/ui/Button';
@@ -9,64 +10,95 @@ export default function Home() {
   const [mode, setMode] = useState<'choose' | 'create' | 'join'>('choose');
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-b from-gray-900 to-black">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-5xl font-bold text-white mb-2">
-            <span className="text-purple-500">🎵</span> HITSTER
+        {/* Title */}
+        <motion.div
+          className="text-center mb-10"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h1 className="text-7xl font-display font-extrabold text-neon-cyan text-glow-cyan mb-3 tracking-tight">
+            HITS
           </h1>
-          <p className="text-gray-400">The music timeline game</p>
-        </div>
+          <p className="text-text-muted text-sm tracking-wide">The music timeline game</p>
+        </motion.div>
 
-        {mode === 'choose' && (
-          <div className="space-y-4">
-            <Button
-              onClick={() => setMode('create')}
-              className="w-full py-6 text-xl"
-              size="lg"
+        <AnimatePresence mode="wait">
+          {mode === 'choose' && (
+            <motion.div
+              key="choose"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="space-y-4"
             >
-              Create Game
-            </Button>
-            <Button
-              onClick={() => setMode('join')}
-              variant="secondary"
-              className="w-full py-6 text-xl"
-              size="lg"
-            >
-              Join Game
-            </Button>
-          </div>
-        )}
+              <Button
+                onClick={() => setMode('create')}
+                className="w-full py-5 text-lg"
+                size="lg"
+              >
+                Create Game
+              </Button>
+              <Button
+                onClick={() => setMode('join')}
+                variant="secondary"
+                className="w-full py-5 text-lg"
+                size="lg"
+              >
+                Join Game
+              </Button>
+            </motion.div>
+          )}
 
-        {mode === 'create' && (
-          <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
-            <h2 className="text-xl font-bold text-white mb-4">Create New Game</h2>
-            <CreateGame />
-            <button
-              onClick={() => setMode('choose')}
-              className="mt-4 text-gray-400 hover:text-white text-sm"
+          {mode === 'create' && (
+            <motion.div
+              key="create"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="glass-panel rounded-2xl p-6"
             >
-              ← Back
-            </button>
-          </div>
-        )}
+              <h2 className="text-xl font-display font-bold text-text-primary mb-4">Create New Game</h2>
+              <CreateGame />
+              <button
+                onClick={() => setMode('choose')}
+                className="mt-4 text-text-muted hover:text-text-primary text-sm transition-colors cursor-pointer"
+              >
+                ← Back
+              </button>
+            </motion.div>
+          )}
 
-        {mode === 'join' && (
-          <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
-            <h2 className="text-xl font-bold text-white mb-4">Join Game</h2>
-            <JoinGame />
-            <button
-              onClick={() => setMode('choose')}
-              className="mt-4 text-gray-400 hover:text-white text-sm"
+          {mode === 'join' && (
+            <motion.div
+              key="join"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="glass-panel rounded-2xl p-6"
             >
-              ← Back
-            </button>
-          </div>
-        )}
+              <h2 className="text-xl font-display font-bold text-text-primary mb-4">Join Game</h2>
+              <JoinGame />
+              <button
+                onClick={() => setMode('choose')}
+                className="mt-4 text-text-muted hover:text-text-primary text-sm transition-colors cursor-pointer"
+              >
+                ← Back
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        <div className="mt-8 text-center text-gray-500 text-xs">
-          <p>All players must be on the same WiFi network</p>
-        </div>
+        <motion.div
+          className="mt-8 text-center text-text-dim text-xs"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          <p>Powered by Spotify</p>
+        </motion.div>
       </div>
     </div>
   );

@@ -24,25 +24,16 @@ export function AudioPlayer({ currentCard, isPlaying }: AudioPlayerProps) {
         style={{ backdropFilter: 'blur(30px)' }}
       >
         <div className="max-w-2xl mx-auto px-4 py-3">
-          {/* Track info + waveform */}
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-3 min-w-0">
-              <motion.div
-                className="w-2 h-2 rounded-full bg-neon-green flex-shrink-0"
-                animate={{ scale: [1, 1.4, 1], opacity: [1, 0.6, 1] }}
-                transition={{ duration: 1.2, repeat: Infinity }}
-              />
-              <div className="min-w-0">
-                <div className="text-text-primary font-semibold text-sm truncate">
-                  {currentCard.title}
-                </div>
-                <div className="text-text-muted text-xs truncate">
-                  {currentCard.artist}
-                </div>
-              </div>
-            </div>
-
-            {/* Waveform bars */}
+          {/* Waveform bars — only visible indicator */}
+          <div className="flex items-center justify-center gap-3">
+            <motion.div
+              className="w-2.5 h-2.5 rounded-full bg-neon-green flex-shrink-0"
+              animate={{ scale: [1, 1.4, 1], opacity: [1, 0.6, 1] }}
+              transition={{ duration: 1.2, repeat: Infinity }}
+            />
+            <span className="text-text-muted text-sm font-display">
+              Listening...
+            </span>
             <div className="flex items-end gap-[3px] h-6 flex-shrink-0">
               {[0, 1, 2, 3, 4].map((i) => (
                 <motion.div
@@ -62,17 +53,18 @@ export function AudioPlayer({ currentCard, isPlaying }: AudioPlayerProps) {
             </div>
           </div>
 
-          {/* Spotify embed */}
-          <iframe
-            src={`https://open.spotify.com/embed/track/${currentCard.spotifyId}?utm_source=generator&theme=0`}
-            width="100%"
-            height="80"
-            frameBorder="0"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"
-            className="rounded-lg"
-            style={{ colorScheme: 'normal' }}
-          />
+          {/* Hidden Spotify embed — plays audio, not visible */}
+          <div className="absolute opacity-0 pointer-events-none h-0 overflow-hidden">
+            <iframe
+              src={`https://open.spotify.com/embed/track/${currentCard.spotifyId}?utm_source=generator&theme=0&autoplay=1`}
+              width="300"
+              height="80"
+              frameBorder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              style={{ colorScheme: 'normal' }}
+            />
+          </div>
         </div>
       </motion.div>
     </AnimatePresence>

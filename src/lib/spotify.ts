@@ -59,7 +59,7 @@ export function trackToSong(track: SpotifyTrack): Song | null {
   const yearStr = track.album.release_date?.substring(0, 4);
   const year = parseInt(yearStr, 10);
 
-  if (!year || isNaN(year) || year < 1950 || year > 2025) {
+  if (!year || isNaN(year) || year < 1950 || year > 2026) {
     return null;
   }
 
@@ -79,6 +79,9 @@ export function trackToSong(track: SpotifyTrack): Song | null {
   };
 }
 
+// Genre queries to combine with year filters for variety
+const GENRE_QUERIES = ['pop', 'rock', 'soul', 'disco', 'hip-hop', 'r&b', 'dance', 'indie'];
+
 async function fetchTracksForDecade(
   token: string,
   startYear: number,
@@ -87,15 +90,20 @@ async function fetchTracksForDecade(
 ): Promise<Song[]> {
   const songs: Song[] = [];
   const seenIds = new Set<string>();
-  const maxAttempts = 3;
 
-  for (let attempt = 0; attempt < maxAttempts && songs.length < count; attempt++) {
-    const offset = Math.floor(Math.random() * 800);
-    const limit = Math.min(50, count * 3);
+  // Pick random genres to search with for variety across games
+  const shuffledGenres = [...GENRE_QUERIES].sort(() => Math.random() - 0.5);
 
-    const query = encodeURIComponent(`year:${startYear}-${endYear}`);
+  for (const genre of shuffledGenres) {
+    if (songs.length >= count) break;
+
+    // Spotify free-tier apps cap search limit at 10
+    const offset = Math.floor(Math.random() * 90);
+    const limit = 10;
+
+    const query = encodeURIComponent(`genre:${genre} year:${startYear}-${endYear}`);
     const response = await fetch(
-      `https://api.spotify.com/v1/search?q=${query}&type=track&limit=${limit}&offset=${offset}&market=US`,
+      `https://api.spotify.com/v1/search?q=${query}&type=track&limit=${limit}&offset=${offset}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
